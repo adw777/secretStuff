@@ -1,6 +1,8 @@
-labels = [
+"""Default PII labels configuration for GLiNER model."""
+
+DEFAULT_LABELS = [
     "work",
-    "booking number",
+    "booking number", 
     "personally identifiable information",
     "driver licence",
     "person",

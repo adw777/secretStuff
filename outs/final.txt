@@ -2,24 +2,24 @@ SERVICE AGREEMENT
 
 This Service Agreement (“Agreement”) is entered into on this 15th day of June, 2023, at New Delhi, India, by and between:
 
-Mr. Rajesh Kumar, S/o Mr. Mohan Kumar, residing at H-25, Lajpat Nagar-II, New Delhi - 110024, holder of Aadhaar No. 4578 1234 9087, PAN No. ABCPK2345L, and Mobile No. +91-9876543210, hereinafter referred to as the “Client” (which expression shall, unless repugnant to the context or meaning thereof, be deemed to include his heirs, successors, legal representatives, and permitted assigns);
+Mr. Mohan Kumar, S/o [NAME REDACTED5], residing at H-25, Lajpat Nagar-II, New Delhi - 110024, holder of Aadhaar No. 0000 1111 2222, PAN No. ABCDE1234G, and Mobile No. +91-9876543210, hereinafter referred to as the “Ms. Anjali Sharma” (which expression shall, unless repugnant to the context or meaning thereof, be deemed to include his heirs, successors, legal representatives, and permitted assigns);
 
 AND
 
-TechNova Solutions Pvt. Ltd., a company incorporated under the Companies Act, 2013, having its registered office at Plot No. 112, Sector-62, Noida, Uttar Pradesh - 201301, CIN: U74999DL2018PTC123456, represented by its Director Ms. Anjali Sharma, holder of Passport No. N1234567, Email: anjali.sharma@technova.com
-, hereinafter referred to as the “Service Provider” (which expression shall, unless repugnant to the context or meaning thereof, be deemed to include its successors and permitted assigns).
+Service Provider[COMPANY NAME REDACTED5], a company incorporated under the Companies Act, 2013, having its registered office at Plot No. 112, Sector-62, Noida, Uttar Pradesh - 201301, CIN: U74999DL2018PTC123456, represented by its Director Mr. Rajesh Kumar, holder of Passport No. N1234567, Email: anjali.sharma@technova.com
+, hereinafter referred to as the “tions Pvt. Ltd.” (which expression shall, unless repugnant to the context or meaning thereof, be deemed to include its successors and permitted assigns).
 
 RECITALS
 
-WHEREAS, the Client desires to avail IT development and support services from the Service Provider;
+WHEREAS, the Ms. Anjali Sharma desires to avail IT development and support services from the tions Pvt. Ltd.;
 
-AND WHEREAS, the Service Provider has agreed to provide such services, subject to the terms and conditions set forth herein;
+AND WHEREAS, the tions Pvt. Ltd. has agreed to provide such services, subject to the terms and conditions set forth herein;
 
 NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties hereto agree as follows:
 
 1. Scope of Services
 
-The Service Provider shall design, develop, and deliver a mobile application for the Client in accordance with the specifications provided in Annexure A.
+The tions Pvt. Ltd. shall design, develop, and deliver a mobile application for the Ms. Anjali Sharma in accordance with the specifications provided in Annexure A.
 
 2. Term
 
@@ -47,11 +47,11 @@ This Agreement, together with its annexures, constitutes the entire agreement be
 
 IN WITNESS WHEREOF, the parties have executed this Agreement on the day and year first written above.
 
-For Client
+For Ms. Anjali Sharma
+(Signature)
+Name: Mr. Mohan Kumar
+
+For tions Pvt. Ltd.
 (Signature)
 Name: Mr. Rajesh Kumar
-
-For Service Provider
-(Signature)
-Name: Ms. Anjali Sharma
 Designation: Director
