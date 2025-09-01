@@ -3,3 +3,7 @@ venv
 env
 .env    
 venv*
+auto_pkgVersionUpdate.txt
+manual_pkgVersionUpdate.txt
+dist/
+secretstuff.egg-info/
