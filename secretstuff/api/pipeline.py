@@ -16,7 +16,7 @@ class SecretStuffPipeline:
     """
     
     def __init__(self, 
-                 model_name: str = "urchade/gliner_multi_pii-v1",
+                 model_name: str = "E3-JSI/gliner-multi-pii-domains-v1",
                  labels: Optional[List[str]] = None,
                  dummy_values: Optional[Dict[str, Union[str, List[str]]]] = None):
         """

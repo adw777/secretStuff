@@ -19,7 +19,17 @@ class PIIRedactor:
             dummy_values: Dictionary mapping PII labels to dummy replacement values.
                          If None, uses DEFAULT_DUMMY_VALUES
         """
-        self.dummy_values = dummy_values or DEFAULT_DUMMY_VALUES.copy()
+        self.dummy_values = dummy_values
+        self.dummy_count={
+            "person":0,
+            "datetime":0,
+            "org":0,
+            "dem":0,
+            "code":0,
+            "loc":0,
+            "quantity":0,
+            "misc":0
+        }
         self.replacement_mapping = {}
     
     def create_replacement_mapping(self, identified_entities: Dict[str, List[str]]) -> Dict[str, str]:
@@ -33,9 +43,8 @@ class PIIRedactor:
             Dictionary mapping original entity texts to dummy values
         """
         replacement_map = {}
-        
         for label, entities in identified_entities.items():
-            if label in self.dummy_values:
+            if self.dummy_values and label in self.dummy_values:
                 dummy_data = self.dummy_values[label]
                 
                 # Check if dummy_data is a list or a single value
@@ -53,7 +62,11 @@ class PIIRedactor:
                     # Single value, use it for all entities of this label
                     for entity in entities:
                         replacement_map[entity] = dummy_data
-        
+            else:
+                for i,entity in enumerate(entities):
+                    replacement_map[entity]=f"{label.upper()}_{self.dummy_count[label]}"
+                    self.dummy_count[label]+=1
+
         self.replacement_mapping = replacement_map
         return replacement_map
     
