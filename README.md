@@ -272,7 +272,7 @@ def process_sensitive_documents(input_dir, output_dir):
 ### Environment Variables
 
 ```bash
-export SECRETSTUFF_MODEL_NAME="urchade/gliner_multi_pii-v1"
+export SECRETSTUFF_MODEL_NAME="aksman18/gliner-multi-pii-domains-v2"
 export SECRETSTUFF_CHUNK_SIZE="384"
 export SECRETSTUFF_CACHE_DIR="/path/to/cache"
 ```
