@@ -12,7 +12,7 @@ class PIIIdentifier:
     from text documents using a pre-trained GLiNER model.
     """
     
-    def __init__(self, model_name: str = "E3-JSI/gliner-multi-pii-domains-v1", labels: Optional[List[str]] = None):
+    def __init__(self, model_name: str = "aksman18/gliner-multi-pii-domains-v2", labels: Optional[List[str]] = None):
         """
         Initialize the PII identifier.
         
