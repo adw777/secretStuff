@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "secretstuff"
-version = "0.0.1"
+version = "1.0.0"
 description = "A comprehensive PII redaction and reverse mapping library"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "axondendrite", email = "amandogra2016@gmail.com"}
+    {name = "axondendrite", email = "amandogra2016@gmail.com"},
+    {name = "Aksman", email = "akshatmanihar580@gmail.com"}
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

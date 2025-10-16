@@ -34,7 +34,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="secretstuff",
-    version="0.1.0",
+    version="1.0.0",
     author="axondendrite",
     author_email="amandogra2016@gmail.com",
     maintainer="Aksman",
