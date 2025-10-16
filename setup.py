@@ -2,39 +2,15 @@
 
 from setuptools import setup, find_packages
 
-# Concise description for PyPI
-short_description = """
-# SecretStuff
-
-A production-ready Python library for identifying, redacting, and reversing personally identifiable information (PII) in text using advanced NLP models.
-
-## Key Features
-- **PII Identification**: Detect 150+ types of PII using GLiNER models
-- **Flexible Redaction**: Replace PII with configurable dummy values
-- **Reverse Mapping**: Restore original PII from redacted text
-- **Production Ready**: Type hints, comprehensive tests, robust error handling
-
-## Quick Example
-```python
-from secretstuff import SecretStuffPipeline
-
-pipeline = SecretStuffPipeline()
-redacted_text, entities, mapping = pipeline.identify_and_redact(
-    "John Doe's email is john@example.com and phone is +1-555-123-4567"
-)
-```
-
-## Documentation
-For complete documentation, examples, and API reference, visit:
-https://github.com/adw777/secretStuff/blob/main/README.md
-"""
+with open("README_PYPI.md", "r", encoding="utf-8") as fh:
+    short_description = fh.read()
 
 with open("requirements.txt", "r", encoding="utf-8") as fh:
     requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
 setup(
     name="secretstuff",
-    version="1.0.0",
+    version="1.0.1",
     author="axondendrite",
     author_email="amandogra2016@gmail.com",
     maintainer="Aksman",
