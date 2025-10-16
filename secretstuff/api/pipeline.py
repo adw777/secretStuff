@@ -18,7 +18,8 @@ class SecretStuffPipeline:
     def __init__(self, 
                  model_name: str = "aksman18/gliner-multi-pii-domains-v2",
                  labels: Optional[List[str]] = None,
-                 dummy_values: Optional[Dict[str, Union[str, List[str]]]] = None):
+                 dummy_values: Optional[Dict[str, Union[str, List[str]]]] = None,
+                 token: Optional[str] = None):
         """
         Initialize the SecretStuff pipeline.
         
@@ -28,14 +29,14 @@ class SecretStuffPipeline:
             dummy_values: Dictionary mapping PII labels to dummy replacement values.
                          If None, uses DEFAULT_DUMMY_VALUES
         """
-        self.identifier = PIIIdentifier(model_name, labels)
+        self.identifier = PIIIdentifier(model_name, labels, token)
         self.redactor = PIIRedactor(dummy_values)
         self.reverse_mapper = ReverseMapper()
         
         self._last_identified_entities = {}
         self._last_replacement_mapping = {}
     
-    def identify_pii(self, text: str, chunk_size: int = 384) -> Dict[str, List[str]]:
+    def identify_pii(self, text: str, chunk_size: int = 384, chunk_overlap: int = 50) -> Dict[str, List[str]]:
         """
         Identify PII entities in the given text.
         
@@ -47,7 +48,7 @@ class SecretStuffPipeline:
             Dictionary mapping PII labels to lists of identified entity texts
         """
         self._last_identified_entities = self.identifier.identify_and_save(
-            text, "identified_entities.json", chunk_size
+            text, "identified_entities.json", chunk_size, chunk_overlap
         )
         return self._last_identified_entities
     
@@ -72,7 +73,7 @@ class SecretStuffPipeline:
         
         return redacted_text
     
-    def identify_and_redact(self, text: str, chunk_size: int = 384) -> Tuple[str, Dict[str, List[str]], Dict[str, str]]:
+    def identify_and_redact(self, text: str, chunk_size: int = 384, chunk_overlap: int = 50) -> Tuple[str, Dict[str, List[str]], Dict[str, str]]:
         """
         Identify PII and redact text in a single operation.
         
@@ -86,7 +87,7 @@ class SecretStuffPipeline:
             - Dictionary of identified entities
             - Dictionary of replacement mappings
         """
-        identified_entities = self.identify_pii(text, chunk_size)
+        identified_entities = self.identify_pii(text, chunk_size, chunk_overlap)
         redacted_text = self.redact_pii(text, identified_entities)
         
         return redacted_text, identified_entities, self._last_replacement_mapping
@@ -119,7 +120,8 @@ class SecretStuffPipeline:
                          output_redacted: str = "redacted.txt",
                          output_identified: str = "identified_entities.json",
                          output_mapping: str = "replacement_mapping.json",
-                         chunk_size: int = 384) -> Dict[str, Any]:
+                         chunk_size: int = 384,
+                         chunk_overlap: int = 50) -> Dict[str, Any]:
         """
         Process a text file through the complete PII pipeline.
         
@@ -138,7 +140,7 @@ class SecretStuffPipeline:
             text = file.read()
         
         # Identify PII
-        identified_entities = self.identifier.identify_and_save(text, output_identified, chunk_size)
+        identified_entities = self.identifier.identify_and_save(text, output_identified, chunk_size, chunk_overlap)
         
         # Redact text
         redacted_text = self.redactor.redact_from_file(
