@@ -19,17 +19,11 @@ class PIIIdentifier:
         Args:
             model_name: Name of the GLiNER model to use
             labels: List of PII labels to identify. If None, uses DEFAULT_LABELS
+            token: Token for the GLiNER model
         """
-        self.model_name = model_name
+        self.identifier = GLiNER.from_pretrained(model_name, token=token)
         self.labels = labels or DEFAULT_LABELS.copy()
-        self._model = None
-        self.token=token
         
-    def _load_model(self) -> None:
-        """Load the GLiNER model if not already loaded."""
-        if self._model is None:
-            self._model = GLiNER.from_pretrained(self.model_name, token=self.token)
-    
     def chunk_text(self, text: str, chunk_size: int = 384, chunk_overlap: int = 50) -> List[str]:
         """
         Split text into chunks of specified size.
@@ -42,13 +36,13 @@ class PIIIdentifier:
             List of text chunks
         """
         chunks = []
-        i=0
+        i = 0
         while i < len(text):
-            chunk=text[i:min(i+chunk_size, len(text))]
+            chunk = text[i:min(i+chunk_size, len(text))]  
             chunks.append(chunk)
             if i+chunk_size>=len(text):
                 return chunks
-            i+=chunk_size-chunk_overlap
+            i += chunk_size - chunk_overlap
     
     def identify_entities(self, text: str, chunk_size: int = 384, chunk_overlap: int = 50) -> List[Dict[str, Any]]:
         """
@@ -57,19 +51,18 @@ class PIIIdentifier:
         Args:
             text: Input text to analyze
             chunk_size: Size of chunks for processing
+            chunk_overlap: Number of characters to overlap between chunks
             
         Returns:
             List of identified entities with text, label, start, and end positions
         """
-        self._load_model()
-        
         chunks = self.chunk_text(text, chunk_size, chunk_overlap)
         all_entities = []
         
         for i, chunk in enumerate(chunks):
-            entities = self._model.predict_entities(chunk, self.labels)
+            entities = self.identifier.predict_entities(chunk, self.labels)
             # Adjust entity positions to account for chunking
-            offset= i * (chunk_size - chunk_overlap)
+            offset = i * (chunk_size - chunk_overlap)
             for entity in entities:
                 entity['start'] += offset
                 entity['end'] += offset
@@ -77,13 +70,13 @@ class PIIIdentifier:
         
         return self._remove_duplicates(all_entities, text)
     
-    def _remove_duplicates(self, entities: List[Dict[str, Any]], text :str) -> List[Dict[str, Any]]:
+    def _remove_duplicates(self, entities: List[Dict[str, Any]], text: str) -> List[Dict[str, Any]]:
         """
         Remove duplicate entities while preserving order.
         
         Args:
             entities: List of entities to deduplicate
-            
+            text: Original text
         Returns:
             List of unique entities
         """
@@ -101,22 +94,13 @@ class PIIIdentifier:
             overlaps = not (entity["end"] <= last["start"] or entity["start"] >= last["end"])
 
             if overlaps:
-                if entity["label"] == last["label"]:
-                    # Merge overlapping with same label
-                    merged[-1] = {
-                        "text": text[min(last["start"], entity["start"]):max(last["end"], entity["end"])],
-                        "start": min(last["start"], entity["start"]),
-                        "end": max(last["end"], entity["end"]),
-                        "label": last["label"],
-                    }
-                else:
-                    # Overlap with different label → keep the longer span
-                    last_len = last["end"] - last["start"]
-                    curr_len = entity["end"] - entity["start"]
+                # For overlapping entities, always keep the longer span regardless of label
+                last_len = last["end"] - last["start"]
+                curr_len = entity["end"] - entity["start"]
 
-                    if curr_len > last_len:
-                        merged[-1] = entity
-                    # else keep the last one (implicitly)
+                if curr_len > last_len:
+                    merged[-1] = entity
+                # else keep the last one (implicitly)
 
             else:
                 merged.append(entity)
@@ -159,7 +143,7 @@ class PIIIdentifier:
         Returns:
             Dictionary mapping labels to lists of entity texts
         """
-        if chunk_overlap>=chunk_size:
+        if chunk_overlap >= chunk_size:
             raise ValueError("chunk_overlap must be smaller than chunk_size")
         
         entities = self.identify_entities(text, chunk_size, chunk_overlap)

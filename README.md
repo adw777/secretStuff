@@ -325,6 +325,9 @@ pip install secretstuff[dev]
 # Run tests
 pytest
 
+#or 
+python -m pytest tests/ -v # please run all the tests before raising a pr
+
 # Run with coverage
 pytest --cov=secretstuff --cov-report=html
 ```

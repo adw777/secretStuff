@@ -19,16 +19,27 @@ class PIIRedactor:
             dummy_values: Dictionary mapping PII labels to dummy replacement values.
                          If None, uses DEFAULT_DUMMY_VALUES
         """
-        self.dummy_values = dummy_values
-        self.dummy_count={
-            "person":0,
-            "datetime":0,
-            "org":0,
-            "dem":0,
-            "code":0,
-            "loc":0,
-            "quantity":0,
-            "misc":0
+        self.dummy_values = dummy_values or DEFAULT_DUMMY_VALUES
+        self.dummy_count = {
+            "person": 0,
+            "datetime": 0,
+            "org": 0,
+            "dem": 0,
+            "code": 0,
+            "loc": 0,
+            "quantity": 0,
+            "misc": 0,
+            "email": 0,
+            "phone number": 0,
+            "address": 0,
+            "credit card number": 0,
+            "ssn": 0,
+            "passport number": 0,
+            "license plate": 0,
+            "ip address": 0,
+            "url": 0,
+            "username": 0,
+            "password": 0
         }
         self.replacement_mapping = {}
     
@@ -63,9 +74,13 @@ class PIIRedactor:
                     for entity in entities:
                         replacement_map[entity] = dummy_data
             else:
-                for i,entity in enumerate(entities):
-                    replacement_map[entity]=f"{label.upper()}_{self.dummy_count[label]}"
-                    self.dummy_count[label]+=1
+                # Handle labels not in dummy_values by using generic counters
+                if label not in self.dummy_count:
+                    self.dummy_count[label] = 0
+                
+                for i, entity in enumerate(entities):
+                    replacement_map[entity] = f"{label.upper()}_{self.dummy_count[label]}"
+                    self.dummy_count[label] += 1
 
         self.replacement_mapping = replacement_map
         return replacement_map

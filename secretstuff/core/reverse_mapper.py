@@ -156,10 +156,22 @@ class ReverseMapper:
         if not self.replacement_mapping or not self.reverse_mapping:
             return False
         
+        # Check if both mappings have the same number of entries
+        if len(self.replacement_mapping) != len(self.reverse_mapping):
+            return False
+        
+        # Check forward mapping consistency
         for original, dummy in self.replacement_mapping.items():
             if dummy not in self.reverse_mapping:
                 return False
             if self.reverse_mapping[dummy] != original:
+                return False
+        
+        # Check reverse mapping consistency
+        for dummy, original in self.reverse_mapping.items():
+            if original not in self.replacement_mapping:
+                return False
+            if self.replacement_mapping[original] != dummy:
                 return False
         
         return True
